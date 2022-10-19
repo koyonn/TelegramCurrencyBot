@@ -32,7 +32,7 @@ public class CurrencyConverterBot extends TelegramLongPollingBot {
 
     private final static String TOKEN = "12345678";
 
-    private final static String BOT_NAME = "knnCCBot";
+    private final static String BOT_NAME = "Bot";
 
     /*
      * Конструктор бота
