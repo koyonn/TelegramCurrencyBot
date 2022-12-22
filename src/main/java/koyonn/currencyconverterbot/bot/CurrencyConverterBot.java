@@ -28,8 +28,8 @@ public class CurrencyConverterBot extends TelegramLongPollingBot {
 	// экземпляр объекта, который содержит данные о пользователях бота:
 	// id чата и выборе валют для конвертации.
 	private final BotUsersContract users;
-	private static final String TOKEN = "5189568858:AAHTcJCCb_kNteKmJAKGzPzdXO6HyRqhY4U";
-	private static final String BOT_NAME = "knnCCBot";
+	private static final String TOKEN = "%TOKEN%";
+	private static final String BOT_NAME = "%BOT_NAME%";
 
 	/*
 	 * Конструктор бота
