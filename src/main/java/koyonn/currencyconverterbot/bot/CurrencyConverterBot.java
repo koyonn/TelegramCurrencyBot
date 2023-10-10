@@ -82,12 +82,12 @@ public class CurrencyConverterBot extends TelegramLongPollingBot {
 			if (commandEntity.isPresent()) {
 				// Обрезаем строку, так как пользователь вместе с командой может
 				// ввести и лишний текст
-				int offset = commandEntity.get()
-				                          .getOffset();
-				int length = commandEntity.get()
-				                          .getLength();
+				// @formatter:off
 				String command = message.getText()
-				                        .substring(offset, length);
+				                        .substring(commandEntity.get().getOffset(),
+				                                   commandEntity.get().getLength()
+				                        );
+				// @formatter:on
 				switch (command) {
 					case "/set_currency":
 						// Кнопки
