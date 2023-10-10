@@ -14,47 +14,38 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-
 import koyonn.currencyconverterbot.constants.Constants;
 import koyonn.currencyconverterbot.problemdomain.BotUsersContract;
 import koyonn.currencyconverterbot.problemdomain.impl.NBRBCurrency;
 import koyonn.currencyconverterbot.service.CurrencyConverterContract;
 
 public class CurrencyConverterBot extends TelegramLongPollingBot {
+
 	// Экземпляр конвертера
 	private final CurrencyConverterContract currencyConverter;
+
 	// Список популярный валют
 	private final Set<String> popularCurrancies;
+
 	// экземпляр объекта, который содержит данные о пользователях бота:
 	// id чата и выборе валют для конвертации.
 	private final BotUsersContract users;
+
 	private static final String TOKEN = "%TOKEN%";
+
 	private static final String BOT_NAME = "%BOT_NAME%";
 
-	/*
-	 * Конструктор бота
-	 */
 	public CurrencyConverterBot() {
 		currencyConverter = CurrencyConverterContract.getInstance();
 		popularCurrancies = Constants.getMainCurrencyAbbreviation();
 		users = BotUsersContract.getInstance();
 	}
 
-	/**
-	 * Геттер токена
-	 *
-	 * @return токен
-	 */
 	@Override
 	public String getBotToken() {
 		return TOKEN;
 	}
 
-	/**
-	 * Геттер имени бота
-	 *
-	 * @return имя бота
-	 */
 	@Override
 	public String getBotUsername() {
 		return BOT_NAME;
@@ -91,11 +82,12 @@ public class CurrencyConverterBot extends TelegramLongPollingBot {
 			if (commandEntity.isPresent()) {
 				// Обрезаем строку, так как пользователь вместе с командой может
 				// ввести и лишний текст
+				int offset = commandEntity.get()
+				                          .getOffset();
+				int length = commandEntity.get()
+				                          .getLength();
 				String command = message.getText()
-				                        .substring(commandEntity.get()
-				                                                .getOffset(),
-				                                commandEntity.get()
-				                                             .getLength());
+				                        .substring(offset, length);
 				switch (command) {
 					case "/set_currency":
 						// Кнопки
@@ -115,7 +107,8 @@ public class CurrencyConverterBot extends TelegramLongPollingBot {
 		} else if (message.hasText() && users.getBoolFirstCurrency(chatId) && users.getBoolSecondCurrency(chatId)) {
 			users.setValueOfExchange(chatId, Double.parseDouble(message.getText()));
 			sendMessage(chatId, currencyConverter.getCurrencyExchangeRates(users.getFirstCurrency(chatId),
-			        users.getSecondCurrency(chatId), users.getValueOfExchange(chatId)));
+			                                                               users.getSecondCurrency(chatId),
+			                                                               users.getValueOfExchange(chatId)));
 			users.setBoolFirstCurrency(chatId, false);
 			users.setBoolSecondCurrency(chatId, false);
 			users.setValueOfExchange(chatId, 0.0);
@@ -147,8 +140,9 @@ public class CurrencyConverterBot extends TelegramLongPollingBot {
 			users.setBoolFirstCurrency(chatId, true);
 		}
 		if (users.getBoolFirstCurrency(chatId) && users.getBoolSecondCurrency(chatId)) {
-			sendMessage(chatId, "Вы выбрали " + users.getFirstCurrency(
-			        chatId) + " и " + users.getSecondCurrency(chatId) + "\n" + "Введите сумму: ");
+			sendMessage(chatId,
+			            "Вы выбрали " + users.getFirstCurrency(chatId) + " и " + users.getSecondCurrency(chatId) + "\n"
+					            + "Введите сумму: ");
 		}
 	}
 

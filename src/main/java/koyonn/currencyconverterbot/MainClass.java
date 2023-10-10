@@ -4,7 +4,7 @@ import koyonn.currencyconverterbot.buildlogic.BuildLogic;
 
 public class MainClass {
 
-    public static void main(String[] args) {
-        BuildLogic.buildBot();
-    }
+	public static void main(String[] args) {
+		BuildLogic.buildBot();
+	}
 }

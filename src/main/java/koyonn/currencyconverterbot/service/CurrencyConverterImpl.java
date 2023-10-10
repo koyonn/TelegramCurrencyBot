@@ -8,8 +8,10 @@ import koyonn.currencyconverterbot.constants.Constants;
 import koyonn.currencyconverterbot.problemdomain.impl.NBRBCurrency;
 
 public class CurrencyConverterImpl implements CurrencyConverterContract {
+
 	// Отображение, где ключи - аббревиатуры валют, а значения - валюты
 	private final Map<String, NBRBCurrency> currencyMap;
+
 	private final NBRBCurrencyService ccs;
 
 	CurrencyConverterImpl() {
@@ -36,8 +38,7 @@ public class CurrencyConverterImpl implements CurrencyConverterContract {
 			double officialRate = e.getValue()
 			                       .getOfficialRate();
 			sb.append(String.format("%d %s = %.2f %s", scale, curName, officialRate, Constants.getBYN()
-			                                                                                  .getCurName())
-			        + "\n");
+			                                                                                  .getCurName()) + "\n");
 		});
 		return new String(sb);
 	}
@@ -56,7 +57,7 @@ public class CurrencyConverterImpl implements CurrencyConverterContract {
 				                                          .getOfficialRate();
 				         sb.append(String.format("%d %s = %.2f %s", scale, curName, officialRate, Constants.getBYN()
 				                                                                                           .getCurName())
-				                 + "\n");
+						         + "\n");
 			         }
 		         });
 		return new String(sb);
@@ -74,8 +75,8 @@ public class CurrencyConverterImpl implements CurrencyConverterContract {
 		                                .getScale();
 		double result = (targetScale * (value * originalRate / originalScale)) / targetRate;
 		return String.format("%.2f %s = %.2f %s", value, currencyMap.get(originalAbbreviation)
-		                                                            .getCurName(),
-		        result, currencyMap.get(targetAbbreviation)
-		                           .getCurName());
+		                                                            .getCurName(), result,
+				currencyMap.get(targetAbbreviation)
+				           .getCurName());
 	}
 }

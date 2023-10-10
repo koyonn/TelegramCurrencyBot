@@ -10,7 +10,6 @@ import java.util.Map;
 import koyonn.currencyconverterbot.buildlogic.BuildLogic;
 import koyonn.currencyconverterbot.constants.Constants;
 import koyonn.currencyconverterbot.problemdomain.impl.NBRBCurrency;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -19,7 +18,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class NBRBCurrencyService {
+
 	private static final Logger logger = LoggerFactory.getLogger(NBRBCurrencyService.class);
+
 	// Отображение, где ключ - аббревиатура валюты, а значение - валюта
 	private final Map<String, NBRBCurrency> currencyRatesList;
 
@@ -37,8 +38,8 @@ public class NBRBCurrencyService {
 	}
 
 	/**
-	 * Метод, где используя Нацбанк РБ API, получаем json-объект со всеми
-	 * валютами и их параметрами и копируем все значения в Map
+	 * Метод, где используя Нацбанк РБ API, получаем json-объект со всеми валютами и их параметрами и копируем все
+	 * значения в Map
 	 *
 	 * @return отображение, где значениями выступают валюты
 	 */
@@ -52,7 +53,7 @@ public class NBRBCurrencyService {
 			int responseCode = con.getResponseCode();
 			if (responseCode != 200) {
 				logger.error("HttpResponseCode: {}", responseCode);
-				throw new RuntimeException();
+				return null;
 			} else {
 				JSONParser parser = new JSONParser();
 				Object obj = parser.parse(new InputStreamReader(url.openStream()));
@@ -61,10 +62,9 @@ public class NBRBCurrencyService {
 					JSONObject jsonObject = (JSONObject) jsonArray.get(i);
 					logger.debug("Валюта: {}", jsonObject);
 					hashMap.put((String) jsonObject.get("Cur_Abbreviation"),
-					        new NBRBCurrency((Long) jsonObject.get("Cur_ID"),
-					                         (String) jsonObject.get("Cur_Abbreviation"),
-					                         (Long) jsonObject.get("Cur_Scale"), (String) jsonObject.get("Cur_Name"),
-					                         (Double) jsonObject.get("Cur_OfficialRate")));
+							new NBRBCurrency((Long) jsonObject.get("Cur_ID"),
+									(String) jsonObject.get("Cur_Abbreviation"), (Long) jsonObject.get("Cur_Scale"),
+									(String) jsonObject.get("Cur_Name"), (Double) jsonObject.get("Cur_OfficialRate")));
 				}
 				hashMap.put("BYN", Constants.getBYN());
 				hashMap.remove("XDR");

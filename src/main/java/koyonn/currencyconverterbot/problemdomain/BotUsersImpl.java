@@ -6,18 +6,24 @@ import java.util.Map;
 import java.util.Set;
 
 class BotUsersImpl implements BotUsersContract {
+
 	// Отображение, где ключ - id чата, а значение - название валюты
 	private final Map<String, String> firstCurrency;
+
 	// Отображение, где ключ - id чата, а значение - название валюты
 	private final Map<String, String> secondCurrency;
+
 	// Отображение, где ключ - id чата, а значение - булевое значeние,
 	// отвечающие за подтверждение выбора валюты
 	private final Map<String, Boolean> boolFirstCurrency;
+
 	// Отображение, где ключ - id чата, а значение - булевое значeние,
 	// отвечающие за подтверждение выбора валюты
 	private final Map<String, Boolean> boolSecondCurrency;
+
 	// Отображение, где ключ - id чата, а значение - название валюты
 	private final Map<String, Double> valueOfExchange;
+
 	// Множество, где хранятся id чатов пользователей
 	private final Set<String> chatIdSet;
 
@@ -30,13 +36,6 @@ class BotUsersImpl implements BotUsersContract {
 		chatIdSet = new HashSet<>();
 	}
 
-	/**
-	 * Геттер экземпляра объекта, являющийся агрегатором данных пользователей
-	 * telegram бота
-	 *
-	 * @return объект, инкапсулирующий данные пользователей и методы с ними
-	 *         работающие
-	 */
 	public static BotUsersImpl getBotUser() {
 		return new BotUsersImpl();
 	}

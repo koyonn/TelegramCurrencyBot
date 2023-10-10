@@ -1,11 +1,7 @@
 package koyonn.currencyconverterbot.problemdomain;
 
 public interface BotUsersContract {
-	/**
-	 * Геттер объекта BotUsersImpl
-	 *
-	 * @return экземпляр класса BotUsersImpl
-	 */
+
 	static BotUsersContract getInstance() {
 		return new BotUsersImpl();
 	}
@@ -83,7 +79,6 @@ public interface BotUsersContract {
 	public void setBoolSecondCurrency(String chatId, Boolean name);
 
 	/**
-	 *
 	 * @param chatId id чата
 	 * @param value  величина валюты
 	 */
